@@ -103,3 +103,24 @@ export async function  fetchText(filePath,callback_f){
     })
     ;
 }
+
+export function formatAttributeName(attributeName) {
+    // Format attribute name for display with proper labels and units
+    const attributeLabels = {
+        'price': 'Price ($)',
+        'area': 'Area (sq ft)',
+        'bedrooms': 'Bedrooms',
+        'bathrooms': 'Bathrooms',
+        'stories': 'Stories',
+        'parking': 'Parking Spots',
+        'mainroad': 'Main Road',
+        'guestroom': 'Guest Room',
+        'basement': 'Basement',
+        'hotwaterheating': 'Hot Water Heating',
+        'airconditioning': 'Air Conditioning',
+        'prefarea': 'Preferred Area',
+        'furnishingstatus': 'Furnishing Status'
+    };
+
+    return attributeLabels[attributeName] || attributeName;
+}

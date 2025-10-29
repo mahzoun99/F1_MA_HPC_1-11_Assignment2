@@ -1,13 +1,16 @@
 import './App.css';
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback, useMemo} from 'react'
 import {fetchCSV} from "./utils/helper";
 import Menu from "./components/Menu";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
 import ParallelCoordinatesContainer from "./components/parallelcoordinates/ParallelCoordinatesContainer";
+import DataDetailsModal from "./components/DataDetailsModal";
 
 function App() {
     const [data,setData] = useState([])
     const [activeVisualization, setActiveVisualization] = useState('scatterplot')
+    const [selectedDataPoint, setSelectedDataPoint] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     
     // every time the component re-render
     // if no dependencies, useEffect is called at each re-render
@@ -22,20 +25,34 @@ function App() {
 
     const [selectedItems, setSelectedItems] = useState([])
 
-    const scatterplotControllerMethods= {
-        updateSelectedItems: (items) =>{
-            setSelectedItems(items.map((item) => {return {...item,selected:true}} ));
-        }
-    };
+    const updateSelectedItems = useCallback((items) => {
+        setSelectedItems(items.map((item) => {return {...item,selected:true}} ));
+    }, []);
 
-    const parallelCoordinatesControllerMethods= {
-        updateSelectedItems: (items) =>{
-            setSelectedItems(items.map((item) => {return {...item,selected:true}} ));
-        }
-    };
+    const scatterplotControllerMethods = useMemo(() => ({
+        updateSelectedItems
+    }), [updateSelectedItems]);
+
+    const parallelCoordinatesControllerMethods = useMemo(() => ({
+        updateSelectedItems
+    }), [updateSelectedItems]);
+
+    const parallelCoordinatesAttributes = useMemo(() => 
+        ["price", "area", "bedrooms", "bathrooms", "stories", "parking"]
+    , []);
 
     const handleVisualizationChange = (visualization) => {
         setActiveVisualization(visualization);
+    }
+
+    const handleOpenModal = (dataPoint) => {
+        setSelectedDataPoint(dataPoint);
+        setIsModalOpen(true);
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedDataPoint(null);
     }
 
     return (
@@ -43,12 +60,13 @@ function App() {
             <Menu activeVisualization={activeVisualization} onVisualizationChange={handleVisualizationChange} />
             <div id={"MultiviewContainer"} className={"row"}>
                 {activeVisualization === 'scatterplot' && (
-                    <ScatterplotContainer scatterplotData={data} xAttribute={"area"} yAttribute={"price"} selectedItems={selectedItems} scatterplotControllerMethods={scatterplotControllerMethods}/>
+                    <ScatterplotContainer scatterplotData={data} xAttribute={"area"} yAttribute={"price"} selectedItems={selectedItems} scatterplotControllerMethods={scatterplotControllerMethods} onOpenModal={handleOpenModal}/>
                 )}
                 {activeVisualization === 'visualization2' && (
-                    <ParallelCoordinatesContainer parallelCoordinatesData={data} attributes={["price", "area", "bedrooms", "bathrooms", "stories", "parking"]} selectedItems={selectedItems} parallelCoordinatesControllerMethods={parallelCoordinatesControllerMethods}/>
+                    <ParallelCoordinatesContainer parallelCoordinatesData={data} attributes={parallelCoordinatesAttributes} selectedItems={selectedItems} parallelCoordinatesControllerMethods={parallelCoordinatesControllerMethods} onOpenModal={handleOpenModal}/>
                 )}
             </div>
+            <DataDetailsModal dataItem={selectedDataPoint} isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
     );
 }

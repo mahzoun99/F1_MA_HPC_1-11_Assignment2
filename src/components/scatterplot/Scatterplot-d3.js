@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-// import { getDefaultFontSize } from '../../utils/helper';
+import { formatAttributeName } from '../../utils/helper';
 
 class ScatterplotD3 {
     margin = {top: 100, right: 10, bottom: 50, left: 100};
@@ -122,6 +122,32 @@ class ScatterplotD3 {
         this.matSvg.select(".yAxisG")
             .transition().duration(500)
             .call(d3.axisLeft(this.yScale))
+        ;
+
+        // Add or update X-axis label
+        this.matSvg.selectAll(".xAxisLabel").remove();
+        this.matSvg.append("text")
+            .attr("class", "xAxisLabel")
+            .attr("x", this.width / 2)
+            .attr("y", this.height + 40)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "14px")
+            .attr("font-weight", "500")
+            .attr("fill", "#333")
+            .text(formatAttributeName(xAttribute));
+
+        // Add or update Y-axis label
+        this.matSvg.selectAll(".yAxisLabel").remove();
+        this.matSvg.append("text")
+            .attr("class", "yAxisLabel")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -this.height / 2)
+            .attr("y", -60)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "14px")
+            .attr("font-weight", "500")
+            .attr("fill", "#333")
+            .text(formatAttributeName(yAttribute));
     }
 
 
@@ -147,6 +173,11 @@ class ScatterplotD3 {
                         .style("opacity",this.defaultOpacity)
                         .on("click", (event,itemData)=>{
                             controllerMethods.handleOnClick(itemData);
+                        })
+                        .on("dblclick", (event,itemData)=>{
+                            if (controllerMethods.handleOnDoubleClick) {
+                                controllerMethods.handleOnDoubleClick(itemData);
+                            }
                         })
                     ;
                     // render element as child of each element "g"

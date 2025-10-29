@@ -1,9 +1,11 @@
 import './ParallelCoordinates.css'
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import ParallelCoordinatesD3 from './ParallelCoordinates-d3';
 
-function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, selectedItems, parallelCoordinatesControllerMethods}){
+function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, selectedItems, parallelCoordinatesControllerMethods, onOpenModal}){
+
+    const [selectedDataPoint, setSelectedDataPoint] = useState(null);
 
     useEffect(()=>{
     });
@@ -42,9 +44,15 @@ function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, sele
             parallelCoordinatesControllerMethods.updateSelectedItems(items)
         }
 
+        const handleOnDoubleClick = function(itemData){
+            setSelectedDataPoint(itemData);
+            onOpenModal(itemData);
+        }
+
         const controllerMethods = {
             handleOnClick,
-            handleBrushSelection
+            handleBrushSelection,
+            handleOnDoubleClick
         }
 
         if(parallelCoordinatesDataRef.current !== parallelCoordinatesData || parallelCoordinatesData.length > 0) {

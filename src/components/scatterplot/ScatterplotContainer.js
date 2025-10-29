@@ -1,11 +1,13 @@
 import './Scatterplot.css'
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import ScatterplotD3 from './Scatterplot-d3';
 
 // TODO: import action methods from reducers
 
-function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selectedItems, scatterplotControllerMethods}){
+function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selectedItems, scatterplotControllerMethods, onOpenModal}){
+
+    const [selectedDataPoint, setSelectedDataPoint] = useState(null);
 
     // every time the component re-render
     // if no dependencies, useEffect is called at each re-render
@@ -52,12 +54,17 @@ function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selected
         const handleBrushSelection = function(items){
             scatterplotControllerMethods.updateSelectedItems(items)
         }
+        const handleOnDoubleClick = function(itemData){
+            setSelectedDataPoint(itemData);
+            onOpenModal(itemData);
+        }
 
         const controllerMethods={
             handleOnClick,
             handleOnMouseEnter,
             handleOnMouseLeave,
-            handleBrushSelection
+            handleBrushSelection,
+            handleOnDoubleClick
         }
 
         if(scatterplotDataRef.current !== scatterplotData || scatterplotData.length > 0) {

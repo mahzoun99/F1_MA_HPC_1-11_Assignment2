@@ -39,15 +39,12 @@ class ParallelCoordinatesD3 {
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     }
 
-    renderParallelCoordinates = function (visData, attributes, controllerMethods) {
-        console.log("render parallel coordinates with attributes:", attributes);
-        
+    renderParallelCoordinates = function (visData, attributes, controllerMethods) {        
         this.allData = visData;
         this.currentAttributes = attributes;
         this.controllerMethods = controllerMethods;
         
         if (!visData || visData.length === 0 || !attributes || attributes.length === 0) {
-            console.log("No data or attributes provided");
             return;
         }
 
@@ -228,6 +225,11 @@ class ParallelCoordinatesD3 {
                             this.controllerMethods.handleOnClick(d);
                         }
                     })
+                    .on("dblclick", (event, d) => {
+                        if (this.controllerMethods && this.controllerMethods.handleOnDoubleClick) {
+                            this.controllerMethods.handleOnDoubleClick(d);
+                        }
+                    })
                     .on("mouseenter", (event, d) => {
                         d3.select(event.currentTarget).style("opacity", 1);
                         d3.select(event.currentTarget).select(".polyline")
@@ -373,10 +375,11 @@ class ParallelCoordinatesD3 {
     }
 
     highlightSelectedItems = function (selectedItems) {
+        const self = this;
         this.matSvg.selectAll(".polyline-group").each(function (d) {
             const isSelected = selectedItems.some(item => item.index === d.index);
             const opacity = isSelected ? 1 : 0.1;
-            const strokeWidth = isSelected ? this.lineStrokeWidth * 2 : this.lineStrokeWidth;
+            const strokeWidth = isSelected ? self.lineStrokeWidth * 2 : self.lineStrokeWidth;
             
             d3.select(this).style("opacity", opacity);
             d3.select(this).select(".polyline")
