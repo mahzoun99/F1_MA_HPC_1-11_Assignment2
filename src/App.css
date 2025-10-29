@@ -1,0 +1,16 @@
+.App {
+    text-align: center;
+    height: 100%;
+}
+#MultiviewContainer{
+    height: 100%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.col2{
+    float: left;
+    width: 50%;
+}
