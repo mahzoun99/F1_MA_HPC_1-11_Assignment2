@@ -28,7 +28,6 @@ class ScatterplotD3 {
         // get the effect size of the view by subtracting the margin
         this.width = this.size.width - this.margin.left - this.margin.right;
         this.height = this.size.height - this.margin.top - this.margin.bottom ;
-        console.log("create SVG width=" + (this.width + this.margin.left + this.margin.right ) + " height=" + (this.height+ this.margin.top + this.margin.bottom));
         // initialize the svg and keep it in a class property to reuse it in renderScatterplot()
         this.matSvg=d3.select(this.el).append("svg")
             .attr("width", this.width + this.margin.left + this.margin.right)
@@ -127,7 +126,6 @@ class ScatterplotD3 {
 
 
     renderScatterplot = function (visData, xAttribute, yAttribute, controllerMethods){
-        console.log("render scatterplot with a new data list ...")
         // Store data, attributes, and controller methods for brush interaction
         this.allData = visData;
         this.currentXAttribute = xAttribute;

@@ -23,7 +23,6 @@ function generateValue(typeGen,i,mean,stddev){
 }
 
 export function genGridData(nbRows, nbColumns, typeGen="random-int", typeGen2="random"){
-    console.log("helper.genGridData()")
     const valuesArr = []
     for(let i=0;i<nbRows*nbColumns;i++){
         let nbProductSold=generateValue(typeGen,i);
@@ -37,7 +36,6 @@ export function genGridData(nbRows, nbColumns, typeGen="random-int", typeGen2="r
     return valuesArr;
 }
 export function genGridValues(nbRows, nbColumns, typeGen="random-int", typeGen2="random"){
-    console.log("helper.genGridData()")
     const randomVal = Math.floor(generateValue("random")*nbColumns*nbRows)
     const valuesArr = []
     for(let i=0;i<nbRows*nbColumns;i++){
