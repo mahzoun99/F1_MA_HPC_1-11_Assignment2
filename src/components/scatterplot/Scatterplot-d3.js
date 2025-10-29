@@ -68,6 +68,7 @@ class ScatterplotD3 {
 
         selection.select(".markerCircle")
             .attr("stroke-width",selected?2:0)
+            .attr("stroke","red")
         ;
     }
 
@@ -212,7 +213,14 @@ class ScatterplotD3 {
     }
 
     clear = function(){
+        // Remove all SVG elements to ensure clean state on remount
         d3.select(this.el).selectAll("*").remove();
+        // Reset internal state
+        this.allData = [];
+        this.currentXAttribute = null;
+        this.currentYAttribute = null;
+        this.controllerMethods = null;
+        this.matSvg = null;
     }
 }
 export default ScatterplotD3;

@@ -1,0 +1,52 @@
+.menuContainer {
+    width: 100%;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+    padding: 0;
+    margin: 0;
+}
+
+.menuNav {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}
+
+.menuList {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 10px;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+}
+
+.menuButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    border-bottom: 3px solid transparent;
+}
+
+.menuButton:hover {
+    background-color: #e8e8e8;
+    color: #000;
+}
+
+.menuButton.active {
+    background-color: #fff;
+    color: #0066cc;
+    border-bottom: 3px solid #0066cc;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
