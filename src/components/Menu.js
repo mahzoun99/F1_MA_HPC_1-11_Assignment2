@@ -19,7 +19,7 @@ function Menu({activeVisualization, onVisualizationChange}){
                             className={`menuButton ${activeVisualization === 'visualization2' ? 'active' : ''}`}
                             onClick={() => onVisualizationChange('visualization2')}
                         >
-                            Visualization 2
+                            Parallel Coordinates
                         </button>
                     </li>
                 </ul>

@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 import {fetchCSV} from "./utils/helper";
 import Menu from "./components/Menu";
 import ScatterplotContainer from "./components/scatterplot/ScatterplotContainer";
+import ParallelCoordinatesContainer from "./components/parallelcoordinates/ParallelCoordinatesContainer";
 
 function App() {
     const [data,setData] = useState([])
@@ -27,6 +28,12 @@ function App() {
         }
     };
 
+    const parallelCoordinatesControllerMethods= {
+        updateSelectedItems: (items) =>{
+            setSelectedItems(items.map((item) => {return {...item,selected:true}} ));
+        }
+    };
+
     const handleVisualizationChange = (visualization) => {
         setActiveVisualization(visualization);
     }
@@ -39,9 +46,7 @@ function App() {
                     <ScatterplotContainer scatterplotData={data} xAttribute={"area"} yAttribute={"price"} selectedItems={selectedItems} scatterplotControllerMethods={scatterplotControllerMethods}/>
                 )}
                 {activeVisualization === 'visualization2' && (
-                    <div className="visualizationPlaceholder">
-                        <p>Visualization 2 - Coming soon</p>
-                    </div>
+                    <ParallelCoordinatesContainer parallelCoordinatesData={data} attributes={["price", "area", "bedrooms", "bathrooms", "stories", "parking"]} selectedItems={selectedItems} parallelCoordinatesControllerMethods={parallelCoordinatesControllerMethods}/>
                 )}
             </div>
         </div>

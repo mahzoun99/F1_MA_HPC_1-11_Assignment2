@@ -1,0 +1,51 @@
+.parallelCoordinatesDivContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #fafafa;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.parallelCoordinatesDivContainer svg {
+    width: 100%;
+    height: 100%;
+}
+
+.parallelCoordinatesG {
+    font-family: 'Arial', sans-serif;
+}
+
+.axis-line {
+    opacity: 0.7;
+}
+
+.axis-label {
+    font-family: 'Arial', sans-serif;
+}
+
+.polyline-group {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.polyline-group:hover {
+    opacity: 1 !important;
+}
+
+.brush {
+    cursor: crosshair;
+}
+
+.brush .overlay {
+    cursor: crosshair;
+}
+
+.brush .selection {
+    stroke: none;
+    fill: #0066cc;
+    fill-opacity: 0.1;
+}
