@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import { getDefaultFontSize } from '../../utils/helper';
 
 class VisD3 {
     margin = {top: 100, right: 5, bottom: 5, left: 100};

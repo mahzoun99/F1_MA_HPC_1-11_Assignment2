@@ -1,14 +1,9 @@
 import './ParallelCoordinates.css'
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 
 import ParallelCoordinatesD3 from './ParallelCoordinates-d3';
 
 function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, selectedItems, parallelCoordinatesControllerMethods, onOpenModal}){
-
-    const [selectedDataPoint, setSelectedDataPoint] = useState(null);
-
-    useEffect(()=>{
-    });
 
     const divContainerRef = useRef(null);
     const parallelCoordinatesD3Ref = useRef(null)
@@ -45,7 +40,6 @@ function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, sele
         }
 
         const handleOnDoubleClick = function(itemData){
-            setSelectedDataPoint(itemData);
             onOpenModal(itemData);
         }
 
@@ -60,7 +54,7 @@ function ParallelCoordinatesContainer({parallelCoordinatesData, attributes, sele
             parallelCoordinatesD3.renderParallelCoordinates(parallelCoordinatesData, attributes, controllerMethods);
             parallelCoordinatesDataRef.current = parallelCoordinatesData;
         }
-    },[parallelCoordinatesData, attributes, parallelCoordinatesControllerMethods]);
+    },[parallelCoordinatesData, attributes, parallelCoordinatesControllerMethods, onOpenModal]);
 
     useEffect(()=>{
         const parallelCoordinatesD3 = parallelCoordinatesD3Ref.current

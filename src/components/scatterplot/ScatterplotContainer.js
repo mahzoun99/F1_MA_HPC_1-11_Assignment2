@@ -1,5 +1,5 @@
 import './Scatterplot.css'
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 
 import ScatterplotD3 from './Scatterplot-d3';
 
@@ -7,14 +7,10 @@ import ScatterplotD3 from './Scatterplot-d3';
 
 function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selectedItems, scatterplotControllerMethods, onOpenModal}){
 
-    const [selectedDataPoint, setSelectedDataPoint] = useState(null);
-
     // every time the component re-render
     // if no dependencies, useEffect is called at each re-render
-    useEffect(()=>{
-    });
 
-    const divContainerRef=useRef(null);
+    const divContainerRef = useRef(null);
     const scatterplotD3Ref = useRef(null)
 
     const getChartSize = function(){
@@ -47,22 +43,15 @@ function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selected
         const handleOnClick = function(itemData){
             scatterplotControllerMethods.updateSelectedItems([itemData])
         }
-        const handleOnMouseEnter = function(itemData){
-        }
-        const handleOnMouseLeave = function(){
-        }
         const handleBrushSelection = function(items){
             scatterplotControllerMethods.updateSelectedItems(items)
         }
         const handleOnDoubleClick = function(itemData){
-            setSelectedDataPoint(itemData);
             onOpenModal(itemData);
         }
 
-        const controllerMethods={
+        const controllerMethods = {
             handleOnClick,
-            handleOnMouseEnter,
-            handleOnMouseLeave,
             handleBrushSelection,
             handleOnDoubleClick
         }
@@ -74,7 +63,7 @@ function ScatterplotContainer({scatterplotData, xAttribute, yAttribute, selected
             scatterplotD3.renderScatterplot(scatterplotData, xAttribute, yAttribute, controllerMethods);
             scatterplotDataRef.current = scatterplotData;
         }
-    },[scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods]);
+    },[scatterplotData, xAttribute, yAttribute, scatterplotControllerMethods, onOpenModal]);
     // if dependencies, useEffect is called after each data update, in our case only scatterplotData changes.
 
 

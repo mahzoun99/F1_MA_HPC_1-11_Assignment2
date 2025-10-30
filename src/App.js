@@ -45,10 +45,10 @@ function App() {
         setActiveVisualization(visualization);
     }
 
-    const handleOpenModal = (dataPoint) => {
+    const handleOpenModal = useCallback((dataPoint) => {
         setSelectedDataPoint(dataPoint);
         setIsModalOpen(true);
-    }
+    }, [])
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
